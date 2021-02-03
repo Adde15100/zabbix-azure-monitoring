@@ -16,6 +16,24 @@ This python module provides Zabbix monitoring support for Azure resources.
 - msrestazure (installed automatically as dependency)
 - requests (installed automatically as dependency)
 
+- selfsigned certificate:
+```
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.crt && cat key.pem cert.crt >> fullchain.pem
+```
+
+- service principal (app registration) in azure:
+```
+az ad sp create-for-rbac --name "Zabbix" --cert "$(cat cert.pem)" --skip-assignment
+```
+-> save appID from output!
+
+Grant "Reader" permissions for your new ServicePrincipal to the requiered resource/resourceGroup/subscription 
+Recommendation: subscription
+
+- thumbprint from your cert.crt for config.txt
+```
+openssl x509 -in cert.pem -fingerprint -noout
+```
 
 ## Installation
 
@@ -89,6 +107,7 @@ azure.logic.apps[configuration_file, resource_group, workflow_name, trigger_name
 ## Examples
 
 ### Example configuration file
+(see also /example.configuration/)
 ```
 {
     "client_id": "<client_id>",
@@ -119,15 +138,6 @@ azure.logic.apps[configuration_file, resource_group, workflow_name, trigger_name
 }
 ```
 
-
-
-### PEM-file thumbprint can be retrieved using OpenSSL command
-```
-openssl x509 -in <path_to_pem_file> -fingerprint -noout
-```
-
-
-
 ### List available resources from Azure's services
 ```
 azure_discover_resources <path_to_config_file>
@@ -154,13 +164,9 @@ azure_discover_roles <path_to_config_file> <resource> <metric> <dimension>
 azure_metric <path_to_config_file> <resource> <metric> <statistic> <timegrain> --timeshift <timeshift>
 ```
 
-
-
 ### Possible values for statistic-argument
 
 Average, Count, Minimum, Maximum, Total
 
-
-
 ### Possible values for timegrain-argument
-PT1M, PT1H, P1D
+PT1M, PT5M, PT15M, PT1H, P1D

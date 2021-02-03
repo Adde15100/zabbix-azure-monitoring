@@ -26,9 +26,10 @@ setup(
     install_requires=[
         'adal>=1.2.5',
         'azure-identity>=1.4.1',
-        'azure-mgmt-monitor>=1.0.1',
+        'azure-mgmt-monitor<2',
         'azure-mgmt-resource>=15.0.0',
         'msrestazure>=0.6.4',
-        'requests>=2.24.0'
+        'requests>=2.24.0',
+    	'pyjwt==1.7.1'
     ]
 )

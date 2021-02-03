@@ -1,0 +1,14 @@
+{
+    "client_id": "12345-abcdef-12345-abcdef", # your appID from your service principal
+    "subscription_id": "12345-12345-12345-12345",
+    "pemfile": "/full/path/to/your/fullchain.crt,
+    "tenant_id": "12345-your-tenant-id-6789",
+    "thumbprint": "A2:89:B:E9:93:F6:2C:09:37:06:F8:A6:2C:09:37:06:F8:A2:39:75",
+    "application_ids": {
+    },
+    "workspace_ids": {
+    },
+    "kusto_queries": {
+    },
+    "resources": {
+    }
